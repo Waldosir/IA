@@ -1,55 +1,115 @@
 package DatosUsuario;
 
-import procesadoJFL.Dificultad;
+import java.util.ArrayList;
 
-public class Usuario extends Dificultad {
+import procesadoJFL.Dificultad;
+import procesadoJFL.DificultadFuzzy;
+
+public class Usuario extends DificultadFuzzy {
 	private int id;
 	private String nombre;
 	private String contrasena;
+	private int numeroLineas;
+	private ArrayList<String[]> datosCursos = new ArrayList<String[]>();
 	private int opcion;
-	private int nivel;
+	private int[] datosFL;
 	
+	public Usuario(int id, String nombre, String contrasena, int numeroLineas) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.contrasena = contrasena;
+		this.numeroLineas = numeroLineas;
+		opcion = -1;
+	}
+
+	public Usuario(String nombre, String contrasena, int numeroLineas) {
+		this.nombre = nombre;
+		this.contrasena = contrasena;
+		this.numeroLineas = numeroLineas;
+	}
 	
 	public Usuario(String nombre, String contrasena) {
 		this.id = 0;
 		this.nombre = nombre;
 		this.contrasena = contrasena;
-		this.opcion = 0;
-		this.nivel = 1;
+		this.numeroLineas = 0;
+		opcion = 0;
 	}
 	
-	public Usuario(int id, String nombre, String contrasena, int nivel) {
-		this.id = id;
-		this.nombre = nombre;
-		this.contrasena = contrasena;
-		this.opcion = 0;
-		this.nivel = nivel;
+	public double getDificultadCurso(String nombreCurso) {
+		for(String[] datosT:datosCursos) {
+			if(datosT[0].equals(nombreCurso)) {
+				return Double.parseDouble(datosT[1]);
+			}
+		}
+		return 0.0;
 	}
-	
-	public String getNombre() {
-		return this.nombre; 
+
+	public int getOpcion() {
+		return opcion;
 	}
-	
+
 	public void setOpcion(int opcion) {
 		this.opcion = opcion;
 	}
-	
-	public int getOpcion() {
-		return this.opcion; 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public int getNumeroLineas() {
+		return numeroLineas;
+	}
+
+	public void setNumeroLineas(int numeroLineas) {
+		this.numeroLineas = numeroLineas;
 	}
 	
-	public int getNivel() {
-		return this.nivel;
+	public void anadirDatos(String[] datos) {
+		datosCursos.add(datos);
 	}
 	
-	public void sumarNivel() {
-		this.nivel+=1;
+	public ArrayList<String[]> getDatos(){
+		return this.datosCursos;
 	}
 	
-	public void limpiar() {
-		this.setValoresDificultad(0, 0, 0);
+	public void setDificultadMateria(int dificultad, String curso) {
+		for(String[] cursos:datosCursos) {
+			if(cursos[0].equals(curso)) {
+				cursos[1] = dificultad+"";
+			}
+		}
 	}
 	
+	public String getDificultadMateria(String curso) {
+		for(String[] cursos:datosCursos) {
+			if(cursos[0].equals(curso)) {
+				return cursos[1]; 
+			}
+		}
+		return "0";
+	}
 	
 	
 }

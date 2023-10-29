@@ -2,13 +2,13 @@ package procesadoJFL;
 
 
 
-public enum dificultades {
+public enum Dificultad {
 	facil("facil"),normal("normal"),dificil("dificil");
 	
 	
 	private String dificultad;
 	
-	private dificultades(String dificultad) {
+	private Dificultad(String dificultad) {
 		this.dificultad = dificultad;
 	}
 	

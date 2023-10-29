@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import DatosUsuario.Usuario;
-import procesadoJFL.dificultades;
+import procesadoJFL.Dificultad;
 
 public class Algebra {
 	private int numeroPreIgual;
@@ -16,20 +16,22 @@ public class Algebra {
 	public Algebra(Usuario uActual) {
 		this.uActual = uActual;
 	}
-	
+	/*
 	public String getPreguntaDificultad() {
 		String pregunta = "";
 		
-		if(uActual.getDificultad().equals(dificultades.dificil.toString())) {
+		if(uActual.getDificultad().equals(Dificultad.dificil.toString())) {
 			pregunta = preguntaDificil();
 		}
-		else if(uActual.getDificultad().equals(dificultades.normal.toString())) {
+		else if(uActual.getDificultad().equals(Dificultad.normal.toString())) {
 			pregunta = preguntaNormal();
 		}else{
 			pregunta = preguntaFacil();
 		}
 		return pregunta;
 	}
+	
+	*/
 	
 	private void bancoRespuestas() {
 		respuestas.clear();

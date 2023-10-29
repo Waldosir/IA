@@ -23,15 +23,13 @@ import DatosUsuario.Usuario;
 
 import javax.swing.event.ChangeEvent;
 
-public class ventanaPreguntas extends JFrame {
-
+public class ns2 extends JFrame {
+/*
 	private static final long serialVersionUID = 1L;
 	private JPanel panelPreguntas;
 	private JTextField textoPreguntas;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args, Usuario uActual) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,9 +43,7 @@ public class ventanaPreguntas extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+
 	public void datos() {
 	}
 	
@@ -161,6 +157,7 @@ public class ventanaPreguntas extends JFrame {
 		JButton facilBoton = new JButton("Facil");
 		facilBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
 				textoPreguntas.setEditable(false);
 				textoPreguntas.setText(algebra.preguntaFacil());
 				ArrayList<Integer> respuestas = algebra.obtenerRespuestas();
@@ -240,4 +237,5 @@ public class ventanaPreguntas extends JFrame {
 
 		
 	}
+	*/
 }
