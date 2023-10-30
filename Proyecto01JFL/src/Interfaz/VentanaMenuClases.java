@@ -8,12 +8,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.LecturaPregunta;
 import DatosUsuario.Usuario;
+import NoLoOcupo.VentanaPreguntasAlgebra;
+import bancoDatos.LecturaUsuarios;
 import procesadoJFL.Dificultad;
 
 public class VentanaMenuClases extends JFrame {
@@ -50,21 +52,21 @@ public class VentanaMenuClases extends JFrame {
 		setContentPane(contentPane);
 		uActual.setOpcion(-1);
 		
-		JButton botonAlgebra = new JButton("Algebra");
-		botonAlgebra.addActionListener(new ActionListener() {
+		JButton botonAlgebraV1 = new JButton("Algebra1.0");
+		botonAlgebraV1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LecturaDatos l = new LecturaDatos();
-				if(!(l.tieneCurso(uActual, botonAlgebra.getText()))) {
-					l.anadirCursoUsuario(uActual, botonAlgebra.getText());
+				LecturaUsuarios l = new LecturaUsuarios();
+				if(!(l.tieneCurso(uActual, botonAlgebraV1.getText()))) {
+					l.anadirCursoUsuario(uActual, botonAlgebraV1.getText());
 				}
 				dispose();
 				VentanaPreguntasAlgebra vPA = new VentanaPreguntasAlgebra(uActual);
 				vPA.main(null, uActual);
 			}
 		});
-		botonAlgebra.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		botonAlgebra.setBounds(52, 85, 104, 35);
-		contentPane.add(botonAlgebra);
+		botonAlgebraV1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		botonAlgebraV1.setBounds(222, 202, 104, 35);
+		contentPane.add(botonAlgebraV1);
 		
 		JLabel lblNewLabel = new JLabel("Bienvenido "+uActual.getNombre());
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -102,19 +104,43 @@ public class VentanaMenuClases extends JFrame {
 		
 		contentPane.add(btnNewButton);
 		
+		JButton botonAlgebra = new JButton("Algebra");
+		botonAlgebra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombreCurso = botonAlgebra.getText();
+				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil, uActual, nombreCurso);
+				IngresarCurso(nombreCurso, pregunta);
+
+				
+				//Null, nombrecurso, clasepreguntas, usuario Actual
+			}
+		});
+		botonAlgebra.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		botonAlgebra.setBounds(41, 85, 104, 35);
+		contentPane.add(botonAlgebra);
+		
 		btnGraficas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombreCurso = btnGraficas.getText();
 				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil, uActual, nombreCurso);
-				dispose();
-				VentanaCurso vC = new VentanaCurso(btnGraficas.getText(),pregunta,uActual);
-				vC.main(null,  nombreCurso,pregunta,uActual);
-				//Null, nombrecurso, clasepreguntas, usuario Actual
+				IngresarCurso(nombreCurso, pregunta);
 				
 				
 				
 			}
 		});
 	}
-
+	
+	private void IngresarCurso(String nombreCurso, LecturaPregunta pregunta) {
+		if(pregunta.CursoTerminado()) {
+			JOptionPane.showMessageDialog(contentPane, "El curso ya ha sido completado. Se activara el modo infinito de preguntas");
+			dispose();
+			VentanaCurso vC = new VentanaCurso(nombreCurso,pregunta,pregunta.getUsuario(), true);
+			vC.main(null,  nombreCurso,pregunta,pregunta.getUsuario(), true);	
+		}else {
+			dispose();
+			VentanaCurso vC = new VentanaCurso(nombreCurso,pregunta,pregunta.getUsuario(), false);
+			vC.main(null,  nombreCurso,pregunta,pregunta.getUsuario(), false);
+		}
+	}
 }

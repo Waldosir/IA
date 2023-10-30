@@ -15,8 +15,9 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.Usuario;
+import bancoDatos.LecturaUsuarios;
+
 
 public class VentanaCambiarContrasena extends JFrame {
 
@@ -90,7 +91,7 @@ public class VentanaCambiarContrasena extends JFrame {
 				if(contrasenaVieja.getText().equals(uActual.getContrasena())) {
 					if(contrasenaNueva.getText().equals(contrasenaConfirmar.getText())) {
 						uActual.setContrasena(contrasenaNueva.getText());
-						LecturaDatos l = new LecturaDatos();
+						LecturaUsuarios l = new LecturaUsuarios();
 						l.actualizarLista(uActual);
 						JOptionPane.showMessageDialog(contentPane, "Cambio de contraseñas actualizado");
 						dispose();
@@ -128,4 +129,5 @@ public class VentanaCambiarContrasena extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 	}
+	
 }

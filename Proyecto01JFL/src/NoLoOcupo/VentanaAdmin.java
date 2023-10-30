@@ -1,4 +1,4 @@
-package Interfaz;
+package NoLoOcupo;
 
 import java.awt.EventQueue;
 
@@ -6,12 +6,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.Usuario;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
+import bancoDatos.LecturaUsuarios;
 
 public class VentanaAdmin extends JFrame {
 
@@ -55,7 +54,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(list);
 		list.setBounds(217, 68, 78, 78);
 		list.setModel(mod);
-		LecturaDatos l = new LecturaDatos();
+		LecturaUsuarios l = new LecturaUsuarios();
 		for(Usuario lista: l.recuperarArrayListUsuarios()) {
 
 			mod.addElement(lista.getNombre());

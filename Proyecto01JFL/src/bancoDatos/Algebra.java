@@ -1,4 +1,4 @@
-package bancoPreguntas;
+package bancoDatos;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.Collections;
 import DatosUsuario.Usuario;
 import procesadoJFL.Dificultad;
 
-public class Algebra {
+public class Algebra {/*
 	private int numeroPreIgual;
 	private int numeroPostIgual;
 	private int resultado;
@@ -16,22 +16,6 @@ public class Algebra {
 	public Algebra(Usuario uActual) {
 		this.uActual = uActual;
 	}
-	/*
-	public String getPreguntaDificultad() {
-		String pregunta = "";
-		
-		if(uActual.getDificultad().equals(Dificultad.dificil.toString())) {
-			pregunta = preguntaDificil();
-		}
-		else if(uActual.getDificultad().equals(Dificultad.normal.toString())) {
-			pregunta = preguntaNormal();
-		}else{
-			pregunta = preguntaFacil();
-		}
-		return pregunta;
-	}
-	
-	*/
 	
 	private void bancoRespuestas() {
 		respuestas.clear();
@@ -211,6 +195,6 @@ public class Algebra {
 		
 	}
 	
-	
+	*/
 
 }

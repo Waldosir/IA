@@ -5,20 +5,20 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.Usuario;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JPasswordField;
+import bancoDatos.LecturaUsuarios;
 
 public class VentanaIngreso extends JFrame {
 
@@ -106,26 +106,7 @@ public class VentanaIngreso extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER){
-					String nombre, contrasena;
-					LecturaDatos ld = new LecturaDatos();
-					nombre = textUsuario.getText();
-					contrasena = contrasenaPsw.getText();
-					LecturaDatos l = new LecturaDatos();
-					if(l.conectar(nombre, contrasena)){
-					try {
-						dispose();
-						Usuario uActual = ld.busquedaUsuario(nombre);
-						VentanaMenuClases vMC= new VentanaMenuClases(uActual);
-						vMC.main(null, uActual);
-					
-					} catch(NullPointerException ex) {
-						JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-					}
-					
-					}else {
-						JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-					}
-					
+					validarUsuarioNuevo(textUsuario, contrasenaPsw);
 				}
 			}
 		});
@@ -134,28 +115,31 @@ public class VentanaIngreso extends JFrame {
 		
 		botonIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nombre, contrasena;
-				LecturaDatos ld = new LecturaDatos();
-				nombre = textUsuario.getText();
-				contrasena = contrasenaPsw.getText();
-				LecturaDatos l = new LecturaDatos();
-				if(l.conectar(nombre, contrasena)){
-				try {
-					dispose();
-					Usuario uActual = ld.busquedaUsuario(nombre);
-					VentanaMenuClases vMC= new VentanaMenuClases(uActual);
-					vMC.main(null, uActual);
-				
-				} catch(NullPointerException ex) {
-					JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-				}
-				
-				}else {
-					JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-				}
-				
+				validarUsuarioNuevo(textUsuario, contrasenaPsw);
 			}
 		});
+		
+	}
+	
+	private void validarUsuarioNuevo(JTextField textUsuario, JPasswordField contrasenaPsw ) {
+		String nombre, contrasena;
+		nombre = textUsuario.getText();
+		contrasena = contrasenaPsw.getText();
+		LecturaUsuarios l = new LecturaUsuarios();
+		if(l.conectar(nombre, contrasena)){
+		try {
+			dispose();
+			Usuario uActual = l.busquedaUsuario(nombre);
+			VentanaMenuClases vMC= new VentanaMenuClases(uActual);
+			vMC.main(null, uActual);
+		
+		} catch(NullPointerException ex) {
+			JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
+		}
+		
+		}else {
+			JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
+		}
 		
 	}
 }

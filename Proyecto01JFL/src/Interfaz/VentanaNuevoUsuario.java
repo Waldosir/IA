@@ -14,8 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.Usuario;
+import bancoDatos.LecturaUsuarios;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaNuevoUsuario extends JFrame {
 
@@ -101,6 +103,14 @@ public class VentanaNuevoUsuario extends JFrame {
 		contentPane.add(lblConfirmarContrasena);
 		
 		textConfirmarContrasena = new JTextField();
+		textConfirmarContrasena.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					validarUsuarioNuevo(textUsuario, textContrasena,textConfirmarContrasena);
+				}
+			}
+		});
 		textConfirmarContrasena.setColumns(10);
 		textConfirmarContrasena.setBounds(137, 152, 148, 25);
 		contentPane.add(textConfirmarContrasena);
@@ -108,56 +118,33 @@ public class VentanaNuevoUsuario extends JFrame {
 		
 		botonCrearNuevoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LecturaDatos l = new LecturaDatos();
-				if(textContrasena.getText().equals(textConfirmarContrasena.getText())) {
-					System.out.println("Si accede");
-					if(l.validarCantidad(textUsuario.getText(), textContrasena.getText())) {
-						if(l.nombreDistinto(textUsuario.getText())) {
-							Usuario u = new Usuario(textUsuario.getText(), textContrasena.getText());
-							l.actualizarLista(u);
-							JOptionPane.showMessageDialog(contentPane, "Usuario registrado");
-							dispose();
-							VentanaIngreso vI = new VentanaIngreso();
-							vI.main(null);
-						}else {
-							JOptionPane.showMessageDialog(contentPane, "Error. Usuario ya existente");
-						}
-						
-					}else {
-						JOptionPane.showMessageDialog(contentPane, "Error. Usuario y/o contrasena \ncortos y/o largos");
-					}
-				}else {
-					JOptionPane.showMessageDialog(contentPane, "Error. Contrasena no iguales");
-				}
+				validarUsuarioNuevo(textUsuario, textContrasena,textConfirmarContrasena);
 			}
 		});
-		/*
-		botonCrearNuevoUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombre, contrasena;
-				LecturaDatos ld = new LecturaDatos();
-				nombre = textUsuario.getText();
-				contrasena = textContrasena.getText();
-				if(!(nombre.equals("") || contrasena.equals(""))){
-				try {
-					Usuario uActual = ld.buscarUsuario(nombre);
-					if(uActual.getContrasena().equals(contrasena)) {
-						JOptionPane.showMessageDialog(contentPane, "Le diste al bueno");
-						dispose();
-						VentanaMenuClases vMC = new VentanaMenuClases(uActual);
-						vMC.main(null, uActual);
-					}else {
-						JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-						System.out.println("Buuuh");
-					}
-				} catch(NullPointerException ex) {
-					JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");
-				}
-				
-				}
-				
-			}
-		});
-		*/
+		
 	}
-}
+	
+	private void validarUsuarioNuevo(JTextField textUsuario, JTextField textContrasena,JTextField textConfirmarContrasena ) {
+		LecturaUsuarios l = new LecturaUsuarios();
+		if(textContrasena.getText().equals(textConfirmarContrasena.getText())) {
+			if(l.validarCantidad(textUsuario.getText(), textContrasena.getText())) {
+				if(l.nombreDistinto(textUsuario.getText())) {
+					Usuario u = new Usuario(textUsuario.getText(), textContrasena.getText());
+					l.actualizarLista(u);
+					JOptionPane.showMessageDialog(contentPane, "Usuario registrado");
+					dispose();
+					VentanaIngreso vI = new VentanaIngreso();
+					vI.main(null);
+				}else {
+					JOptionPane.showMessageDialog(contentPane, "Error. Usuario ya existente");
+				}
+				
+			}else {
+				JOptionPane.showMessageDialog(contentPane, "Error. Usuario y/o contrasena \ncortos y/o largos");
+			}
+		}else {
+			JOptionPane.showMessageDialog(contentPane, "Error. Contrasena no iguales");
+		}
+	}
+	}
+

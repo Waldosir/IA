@@ -1,30 +1,21 @@
-package Interfaz;
+package NoLoOcupo;
 
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
-import DatosUsuario.LecturaDatos;
 import DatosUsuario.Usuario;
-import bancoPreguntas.Algebra;
+import bancoDatos.Algebra;
 
 public class VentanaPreguntasAlgebra extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel panelPreguntas;
 	private JTextField textoPreguntas;
@@ -53,7 +44,7 @@ public class VentanaPreguntasAlgebra extends JFrame {
 	 * Create the frame.
 	 */
 	
-	
+	/*
 	public void datos() {
 	}
 	
@@ -74,8 +65,9 @@ public class VentanaPreguntasAlgebra extends JFrame {
 		return false;
 	}
 	
-
+*/
 	public VentanaPreguntasAlgebra(Usuario uActual) {
+		/*
 		String nombreCurso = "Algebra";
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 450, 300);
@@ -413,7 +405,7 @@ public class VentanaPreguntasAlgebra extends JFrame {
 					ayuda = uActual.getHelp();
 					timer.stop();
 					uActual.setValoresDificultad(tiempo, ayuda, errores);
-					uActual.setDificultadMateria(uActual.proceso(), "Algebra");
+					//uActual.setDificultadMateria(uActual.proceso(), "Algebra");
 					botonRespuesta.setVisible(false);
 					botonAyuda.setVisible(false);
 					timer.stop();
@@ -448,9 +440,9 @@ public class VentanaPreguntasAlgebra extends JFrame {
 				tiempoLabel.setText(""+second);
 			}
 		}); 
-			
+			*/
 	}
-	*/
+	/*
 	public void actualizar(JRadioButton[] respuestasArrayButton, JTextField pregunta, Usuario uActual, Algebra algebra) {
 		int difUsuario = Integer.parseInt(uActual.getDificultadMateria("Algebra"));
 		String preguntaActualizar;
@@ -502,6 +494,6 @@ public class VentanaPreguntasAlgebra extends JFrame {
 		}); 
 			
 	}
-	
+	*/
 	
 }

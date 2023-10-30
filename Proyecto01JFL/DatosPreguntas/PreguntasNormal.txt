@@ -1,3 +1,0 @@
-pregunta1F|RV1|R2|R3|R4|RV1|
-pregunta2F|RV2|R5|R6|R7|RV2|
-pregunta3F|RV3|R8|R9|R10|RV3|

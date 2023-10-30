@@ -1,8 +1,6 @@
 package DatosUsuario;
 
 import java.util.ArrayList;
-
-import procesadoJFL.Dificultad;
 import procesadoJFL.DificultadFuzzy;
 
 public class Usuario extends DificultadFuzzy {
@@ -10,10 +8,11 @@ public class Usuario extends DificultadFuzzy {
 	private String nombre;
 	private String contrasena;
 	private int numeroLineas;
+	//Nombre del curso - Suma despues de racha de 3 - Condicion de si acabo el curso
 	private ArrayList<String[]> datosCursos = new ArrayList<String[]>();
 	private int opcion;
-	private int[] datosFL;
 	
+	//Usuario para rescatar Usuarios
 	public Usuario(int id, String nombre, String contrasena, int numeroLineas) {
 		super();
 		this.id = id;
@@ -22,13 +21,16 @@ public class Usuario extends DificultadFuzzy {
 		this.numeroLineas = numeroLineas;
 		opcion = -1;
 	}
-
+	/*
+	//Usuario para creacion de 
 	public Usuario(String nombre, String contrasena, int numeroLineas) {
 		this.nombre = nombre;
 		this.contrasena = contrasena;
 		this.numeroLineas = numeroLineas;
 	}
+	*/
 	
+	//Usuario para la creacion de usuarios
 	public Usuario(String nombre, String contrasena) {
 		this.id = 0;
 		this.nombre = nombre;
@@ -37,15 +39,6 @@ public class Usuario extends DificultadFuzzy {
 		opcion = 0;
 	}
 	
-	public double getDificultadCurso(String nombreCurso) {
-		for(String[] datosT:datosCursos) {
-			if(datosT[0].equals(nombreCurso)) {
-				return Double.parseDouble(datosT[1]);
-			}
-		}
-		return 0.0;
-	}
-
 	public int getOpcion() {
 		return opcion;
 	}
@@ -90,26 +83,18 @@ public class Usuario extends DificultadFuzzy {
 		datosCursos.add(datos);
 	}
 	
+	public void setDatos(ArrayList<String[]> datos) {
+		this.datosCursos.clear();
+		for(String[] todo:datos) {
+			anadirDatos(todo);
+		}
+	}
+	
 	public ArrayList<String[]> getDatos(){
 		return this.datosCursos;
 	}
 	
-	public void setDificultadMateria(int dificultad, String curso) {
-		for(String[] cursos:datosCursos) {
-			if(cursos[0].equals(curso)) {
-				cursos[1] = dificultad+"";
-			}
-		}
-	}
 	
-	public String getDificultadMateria(String curso) {
-		for(String[] cursos:datosCursos) {
-			if(cursos[0].equals(curso)) {
-				return cursos[1]; 
-			}
-		}
-		return "0";
-	}
-	
+
 	
 }

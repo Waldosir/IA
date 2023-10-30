@@ -1,4 +1,4 @@
-package DatosUsuario;
+package bancoDatos;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class LecturaDatos {
-	String Ruta = "datos.txt";
-	private ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-	private Usuario usuarioActual;
+import DatosUsuario.Usuario;
 
+public class LecturaUsuarios {
+	String Ruta = "DatosUsuarios/datos.txt";
+	private ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	
-	public LecturaDatos() {
+	public LecturaUsuarios() { //Toma todos los usuarios
 		ArrayList<Usuario> l =recuperarArrayListUsuarios();
 		for(Usuario lista:l) {
 			this.listaUsuarios.add(lista);
@@ -25,7 +25,7 @@ public class LecturaDatos {
 	}
 	
 	
-	public boolean nombreDistinto(String nombre) {
+	public boolean nombreDistinto(String nombre) { //Impide que haya nombre repetido
 		for(Usuario lista:listaUsuarios) {
 			if(lista.getNombre().equals(nombre)) {
 				return false;
@@ -34,6 +34,7 @@ public class LecturaDatos {
 		return true;
 	}
 	
+	//Valida usuarios y contraseñas que no esten largos o cortos
 	public boolean validarCantidad(String nombre, String contrasena) {
 		if(nombre.length()<12 && nombre.length()>=4) {
 			if(contrasena.length()<10 && contrasena.length()>4) {
@@ -44,7 +45,7 @@ public class LecturaDatos {
 		return false;
 	}
 	
-	
+	//Verifica conexion para pasar Usuario-Contraseña
 	public boolean conectar(String nombre, String contrasena) {
 		for(Usuario lista:this.listaUsuarios) {
 			if(lista.getNombre().equals(nombre)) {
@@ -57,6 +58,7 @@ public class LecturaDatos {
 		return false;
 	}
 	
+	//Checa si tiene curso.
 	public boolean tieneCurso(Usuario u, String nombreCurso) {
 			for(int i=0;i<u.getDatos().size();i++) {
 				if(u.getDatos().get(i)[0].equals(nombreCurso)) {
@@ -67,15 +69,11 @@ public class LecturaDatos {
 		return false;
 	}
 	
+	//Añade el curso a la linea de texto.
 	public void anadirCursoUsuario(Usuario u, String nombreCurso) {
-		String datos[] = {nombreCurso,"0.0","0"};
+		String datos[] = {nombreCurso,"0","0"};
 		u.anadirDatos(datos);
-		System.out.println("Cursos que tiene:");
-		for(int i=0;i<u.getDatos().size();i++) {
-			System.out.println(u.getDatos().get(i)[0]);
-		}
 		u.setNumeroLineas(u.getNumeroLineas()+1);
-		System.out.println(u.getNumeroLineas()+" blablabla");
 		actualizarLista(u);
 	}
 	
@@ -268,69 +266,7 @@ public class LecturaDatos {
 	}
 	
 	
-	/*
-	private int AsignarID() {//Asignación de ID sin inconvenientes del usuario
-		int x = 0;
-		while(true) {
-			x++;
-			if(buscarIDUsuario(x) == null) {//Si ese ID no existe, se asigna
-				break;
-			}		
-		}
-		return x;
-	}
 	
-	
-	public Usuario buscarUsuario(String nombreUsuario) {
-		Usuario u = null;
-		try(BufferedReader bf = new BufferedReader(new FileReader(ruta))){//Encuentra el archivo
-			String s;
-			while((s = bf.readLine())!=null) {//Lee una linea entera y hasta que la línea ya no tenga nada
-				String[] datos = s.split("[|]");//Array de todos los datos seccionados
-				if(datos[1].equals(nombreUsuario)) {//Si encuentra el nombre se crea el objeto con sus datos
-					u = new Usuario(Integer.parseInt(datos[0]),datos[1],datos[2],Integer.parseInt(datos[3]));
-					break;
-				}
-			}
-		}catch(IOException ex) {
-			ex.printStackTrace();
-		}
-		return u;//Si no encuentra nada, regresa null
-	}
-	
-	public Usuario buscarIDUsuario(int ID) {//Buscar como el anterior, pero ahora con el ID
-		Usuario u = null;
-		try(BufferedReader bf = new BufferedReader(new FileReader(ruta))){
-			String s;
-			while((s = bf.readLine())!=null) {
-				String[] datos = s.split("[|]");
-				if(datos[0].equals(ID+"")) {//Dado que ID es un entero, ID se transforma en String y compara
-					u = new Usuario(Integer.parseInt(datos[0]),datos[1],datos[2],Integer.parseInt(datos[3]));
-					break;
-				}
-			}
-		}catch(IOException ex) {
-			ex.printStackTrace();
-		}
-		return u;
-	}
-	
-	public boolean agregar(String usuario, String contrasena) {//Agregar usuarios
-		if(buscarUsuario(usuario)==null) {//Si no encuentra el usuario
-			Usuario u = new Usuario(AsignarID(),usuario,contrasena);//Usuario basico
-			try(FileOutputStream fos = new FileOutputStream(ruta,true);
-					PrintStream salida = new PrintStream(fos)){//Crea en una nueva linea los datos del usuario
-			salida.println(u.getID()+"|"+u.getUsuario()+"|"+u.getContrasena()+"|"+u.getNumeroLibrosPrestado());	
-				
-			}catch(IOException ex) {
-				ex.printStackTrace();
-			}
-			return true;//Lo creo
-		}else {
-			return false;//Ya existe el usuario
-		}
-	}
-	*/
 	
 	
 	

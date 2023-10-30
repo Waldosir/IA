@@ -1,0 +1,9 @@
+1|Aldair|123456|0
+2|1|1|2
+Graficas|6|1
+Algebra|0|0
+3|Waldos|Waldos|0
+4|Vlado|123456|0
+5|123456|123456|1
+Algebra|1|0
+6|1234567|1234567|0
