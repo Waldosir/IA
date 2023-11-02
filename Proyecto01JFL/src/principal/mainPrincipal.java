@@ -13,13 +13,13 @@ public class mainPrincipal {
 	}
 	
 
-	static void ventana(String[] args) {
+	private static void ventana(String[] args) {
 		VentanaIngreso v = new VentanaIngreso();
-		v.main(args);
+		v.setVisible(true);
 	}
 	
 	
-	static void pruebas() {
+	private static void pruebas() {
 		DificultadFuzzy d = new DificultadFuzzy();
 		d.checarGraficas();
 	}

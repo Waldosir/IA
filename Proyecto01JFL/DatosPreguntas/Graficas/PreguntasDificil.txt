@@ -1,3 +1,6 @@
-pregunta1D|RV7|R2|R3|R4|RV7|
-pregunta2D|RV8|R5|R6|R7|RV8|
-pregunta3D|RV9|R8|R9|R0|RV9|
+¿En que valor de X toca el Dominio de la grafica?: /n((x^2)/16)+((y^2)/81)  = 1|x = ±4|x = ±9|x = ±16|x = ±81|x = ±4|
+¿En que valor de X toca el Dominio de la grafica?: /n((x^2)/25)+((y^2)/49)  = 1|x = ±5|x = ±7|x = ±25|x = ±49|x = ±5|
+¿En que valor de X toca el Dominio de la grafica?: /n((x^2)/36)+((y^2)/64)  = 1|x = ±6|x = ±8|x = ±36|x = ±64|x = ±6|
+¿En que valor de X toca el Rango de la grafica?: /n((x^2)/16)+((y^2)/81)  = 1  |x = ±9|x = ±4|x = ±16|x = ±81|x = ±9|
+¿En que valor de X toca el Rango de la grafica?: /n((x^2)/25)+((y^2)/49)  = 1  |x = ±7|x = ±5|x = ±25|x = ±49|x = ±7|
+¿En que valor de X toca el Rango de la grafica?: /n((x^2)/36)+((y^2)/64)  = 1  |x = ±8|x = ±6|x = ±36|x = ±64|x = ±8|

@@ -1,3 +1,6 @@
-pregunta1F|RV1|R2|R3|R4|RV1|
-pregunta2F|RV2|R5|R6|R7|RV2|
-pregunta3F|RV3|R8|R9|R10|RV3|
+¿En que valor de X toca el Dominio de la grafica?: /ny = x+2|x = -2|x = 2|x = 4|x = -1|x = -2|
+¿En que valor de X toca el Dominio de la grafica?: /ny = x-5|x = 5|x = -5|x = 6|x = -1|x = 5|
+¿En que valor de X toca el Dominio de la grafica?: /ny = x-8|x = 8|x = -8|x = -4|x = 1|x = 8|
+¿En que valor de X toca el Rango de la grafica?: /ny = x+2|x = 2|x = -2|x = 4|x = -1|x = 2|
+¿En que valor de X toca el Rango de la grafica?: /ny = x-5|x = -5|x = 5|x = 6|x = -1|x = -5|
+¿En que valor de X toca el Rango de la grafica?: /ny = x-8|x = -8|x = 8|x = -4|x = 1|x = -8|

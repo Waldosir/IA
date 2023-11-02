@@ -1,9 +1,8 @@
 package DatosUsuario;
 
 import java.util.ArrayList;
-import procesadoJFL.DificultadFuzzy;
 
-public class Usuario extends DificultadFuzzy {
+public class Usuario  {
 	private int id;
 	private String nombre;
 	private String contrasena;
@@ -21,14 +20,7 @@ public class Usuario extends DificultadFuzzy {
 		this.numeroLineas = numeroLineas;
 		opcion = -1;
 	}
-	/*
-	//Usuario para creacion de 
-	public Usuario(String nombre, String contrasena, int numeroLineas) {
-		this.nombre = nombre;
-		this.contrasena = contrasena;
-		this.numeroLineas = numeroLineas;
-	}
-	*/
+
 	
 	//Usuario para la creacion de usuarios
 	public Usuario(String nombre, String contrasena) {

@@ -47,6 +47,7 @@ public class VentanaIngreso extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaIngreso() {
+		setTitle("Aprendizaje con dificultad ajustada");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 450, 300);
 		contentPane = new JPanel();
@@ -84,7 +85,7 @@ public class VentanaIngreso extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				VentanaNuevoUsuario vNU = new VentanaNuevoUsuario();
-				vNU.main(null);
+				vNU.setVisible(true);
 			}
 		});
 		botonNuevoUsuario.setBounds(322, 75, 92, 52);
@@ -124,14 +125,14 @@ public class VentanaIngreso extends JFrame {
 	private void validarUsuarioNuevo(JTextField textUsuario, JPasswordField contrasenaPsw ) {
 		String nombre, contrasena;
 		nombre = textUsuario.getText();
-		contrasena = contrasenaPsw.getText();
+		contrasena = String.valueOf(contrasenaPsw.getPassword());
 		LecturaUsuarios l = new LecturaUsuarios();
 		if(l.conectar(nombre, contrasena)){
 		try {
 			dispose();
 			Usuario uActual = l.busquedaUsuario(nombre);
 			VentanaMenuClases vMC= new VentanaMenuClases(uActual);
-			vMC.main(null, uActual);
+			vMC.setVisible(true);
 		
 		} catch(NullPointerException ex) {
 			JOptionPane.showMessageDialog(contentPane, "Usuario y/o contraseña no validos");

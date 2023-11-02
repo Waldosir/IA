@@ -47,6 +47,7 @@ public class VentanaCambiarContrasena extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCambiarContrasena(Usuario uActual) {
+		setTitle("Cambiar Contrasena");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -88,15 +89,16 @@ public class VentanaCambiarContrasena extends JFrame {
 		JButton botonAceptar = new JButton("Aceptar");
 		botonAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(contrasenaVieja.getText().equals(uActual.getContrasena())) {
-					if(contrasenaNueva.getText().equals(contrasenaConfirmar.getText())) {
-						uActual.setContrasena(contrasenaNueva.getText());
+				//contrasena = String.valueOf(contrasenaPsw.getPassword());
+				if(String.valueOf(contrasenaVieja.getPassword()).equals(uActual.getContrasena())) {
+					if(String.valueOf(contrasenaNueva.getPassword()).equals(String.valueOf(contrasenaConfirmar.getPassword()))) {
+						uActual.setContrasena(String.valueOf(contrasenaNueva.getPassword()));
 						LecturaUsuarios l = new LecturaUsuarios();
 						l.actualizarLista(uActual);
 						JOptionPane.showMessageDialog(contentPane, "Cambio de contraseñas actualizado");
 						dispose();
 						VentanaMenuClases vMC = new VentanaMenuClases(uActual);
-						vMC.main(null, uActual);
+						vMC.setVisible(true);
 						
 					}else {
 						JOptionPane.showMessageDialog(contentPane, "Error. Contrasena nueva no son iguales");
@@ -116,7 +118,7 @@ public class VentanaCambiarContrasena extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				VentanaMenuClases vMC = new VentanaMenuClases(uActual);
-				vMC.main(null, uActual);
+				vMC.setVisible(true);
 			}
 		});
 		botonSalir.setBounds(292, 121, 85, 21);

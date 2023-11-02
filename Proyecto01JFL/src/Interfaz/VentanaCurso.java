@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -29,7 +28,6 @@ public class VentanaCurso extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textoPregunta;
 	
 	final int NUMEROTERMINARCURSO = 10;
 	
@@ -59,13 +57,15 @@ public class VentanaCurso extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaCurso(String nombreCurso, LecturaPregunta preguntas, Usuario uActual, boolean condicionInfinita) {
+		setTitle("Ventana del curso");
 		DificultadFuzzy detectaCambioDificultad = new DificultadFuzzy();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		int posVX=100, posVY = 100, vTBase= 450, vTAltura = 300;
+		setBounds(posVX, posVY, vTBase, vTAltura);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
-		setContentPane(contentPane);
+		contentPane.setLayout(null);//Permite mover con libertad las cosas
+		setContentPane(contentPane);//Coloca la ventana en la ventana
 		
 		JLabel tiempoLabel = new JLabel("0:0");
 		tiempoLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,21 +76,17 @@ public class VentanaCurso extends JFrame {
 		
 		Timer(tiempoLabel);
 		
-		
-		
-		textoPregunta = new JTextField();
-		textoPregunta.setBackground(Color.WHITE);
-		textoPregunta.setForeground(Color.BLACK);
+		JLabel textoPregunta = new JLabel("Preguntas");
 		textoPregunta.setHorizontalAlignment(SwingConstants.CENTER);
-		textoPregunta.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textoPregunta.setBounds(63, 60, 256, 51);
+		textoPregunta.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		textoPregunta.setBackground(new Color(255, 255, 255));
+		textoPregunta.setBounds(20, 49, 299, 62);
 		contentPane.add(textoPregunta);
-		textoPregunta.setColumns(10);
 		
 		JLabel titulolbl = new JLabel(nombreCurso);
 		titulolbl.setHorizontalAlignment(SwingConstants.CENTER);
 		titulolbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		titulolbl.setBounds(118, 21, 187, 29);
+		titulolbl.setBounds(115, 10, 187, 29);
 		contentPane.add(titulolbl);
 		
 		JButton botonAyuda = new JButton("Ayuda");
@@ -145,6 +141,9 @@ public class VentanaCurso extends JFrame {
 					}
 				}
 				uActual.setOpcion(n);
+				if(!(respuestasArrayButton[0].isSelected())) {
+					uActual.setOpcion(-1);
+				}
 			}
 		});
 		
@@ -157,6 +156,9 @@ public class VentanaCurso extends JFrame {
 					}
 				}
 				uActual.setOpcion(n);
+				if(!(respuestasArrayButton[1].isSelected())) {
+					uActual.setOpcion(-1);
+				}
 			}
 		});
 		
@@ -169,6 +171,9 @@ public class VentanaCurso extends JFrame {
 					}
 				}
 				uActual.setOpcion(n);
+				if(!(respuestasArrayButton[2].isSelected())) {
+					uActual.setOpcion(-1);
+				}
 			}
 		});
 		
@@ -181,6 +186,9 @@ public class VentanaCurso extends JFrame {
 					}
 				}
 				uActual.setOpcion(n);
+				if(!(respuestasArrayButton[3].isSelected())) {
+					uActual.setOpcion(-1);
+				}
 			}
 		});
 		
@@ -206,7 +214,10 @@ public class VentanaCurso extends JFrame {
 					if(respuestaUsuario.equals(preguntas.getRespuesta())) {
 						timer.stop();
 						//Tiempo - Ayuda - Errores
-						detectaCambioDificultad.setValoresDificultad(hours*60*60+minutes*60+second, uActual.getHelp(), uActual.getMistakes());
+						int tiempo = hours*60*60+minutes*60+second;
+						int ayuda = detectaCambioDificultad.getHelp();
+						int errores = detectaCambioDificultad.getMistakes();
+						detectaCambioDificultad.setValoresDificultad(tiempo,ayuda,errores);
 						botonAceptar.setVisible(false);
 						botonAyuda.setVisible(false);
 						botonSiguiente.setVisible(true);
@@ -218,7 +229,7 @@ public class VentanaCurso extends JFrame {
 					}else {
 						lblRespuesta.setText("Respuesta: Incorrecta.");
 						respuestasArrayButton[uActual.getOpcion()].setForeground(Color.RED);
-						uActual.sumarErrores();
+						detectaCambioDificultad.sumarErrores();
 					}
 				}catch(ArrayIndexOutOfBoundsException ex) {
 					JOptionPane.showMessageDialog(contentPane, "Escoge una opcion");	
@@ -232,11 +243,11 @@ public class VentanaCurso extends JFrame {
 		
 		botonAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				uActual.sumarAyuda();
-				if(uActual.getHelp()<3) {
-					labelAyuda(respuestasArrayButton, preguntas.getRespuesta(), preguntas.getUsuario());
+				detectaCambioDificultad.sumarAyuda();
+				if(detectaCambioDificultad.getHelp()<3) {
+					labelAyuda(respuestasArrayButton, preguntas.getRespuesta(), uActual);
 				}else {
-					labelAyuda(respuestasArrayButton, preguntas.getRespuesta(),preguntas.getUsuario());
+					labelAyuda(respuestasArrayButton, preguntas.getRespuesta(),uActual);
 					botonAyuda.setVisible(false);
 				}
 				
@@ -252,14 +263,11 @@ public class VentanaCurso extends JFrame {
 		
 		JLabel Nivellbl = new JLabel("Nivel:"+preguntas.getDificultad().toString());
 		Nivellbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		Nivellbl.setBounds(10, 220, 103, 33);
+		Nivellbl.setBounds(10, 220, 131, 33);
 		contentPane.add(Nivellbl);
 		
 		
 		botonSiguiente.setVisible(false);
-		
-		textoPregunta.setText(preguntas.getPregunta());
-		textoPregunta.setEditable(false);
 		
 		JButton botonSalir = new JButton("<--Salir");
 		botonSalir.addActionListener(new ActionListener() {
@@ -267,7 +275,7 @@ public class VentanaCurso extends JFrame {
 				
 				dispose();
 				VentanaMenuClases vMC= new VentanaMenuClases(uActual);
-				vMC.main(null, uActual);
+				vMC.setVisible(true);
 			}
 		});
 		botonSalir.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -285,12 +293,12 @@ public class VentanaCurso extends JFrame {
 				second = 0;
 				minutes = 0;
 				hours = 0;
-				detectaCambioDificultad.verificarEstadoNivel(preguntas);
+				detectaCambioDificultad.verificarEstadoNivel(preguntas, uActual);
 				
 				if(detectaCambioDificultad.getRacha()) {
 					lblRacha.setVisible(true);
 					if(!condicionInfinita) {
-						lblRacha.setText("Quedan:"+(NUMEROTERMINARCURSO-preguntas.getNumeroRacha()));
+						lblRacha.setText("Quedan:"+(NUMEROTERMINARCURSO-preguntas.getNumeroRacha(uActual)));
 					}else {
 						RachaInfinita++;
 						lblRacha.setText("Racha:"+ RachaInfinita + " seguidas");
@@ -304,14 +312,13 @@ public class VentanaCurso extends JFrame {
 				Nivellbl.setText("Nivel:"+preguntas.getDificultad().toString());
 				colocarPregunta(respuestasArrayButton, textoPregunta, preguntas);
 				lblRespuesta.setText("Respuesta:");
-				
-				uActual.resetFL();
-				if(preguntas.getNumeroRacha()>=NUMEROTERMINARCURSO && !preguntas.CursoTerminado()) {
-					preguntas.terminarCurso();
+				detectaCambioDificultad.resetFL();
+				if(preguntas.getNumeroRacha(uActual)>=NUMEROTERMINARCURSO && !preguntas.CursoTerminado(uActual)) {
+					preguntas.terminarCurso(uActual);
 					JOptionPane.showMessageDialog(contentPane, "Felicidades. Has terminado el curso "+nombreCurso);
 					dispose();
 					VentanaMenuClases vMC= new VentanaMenuClases(uActual);
-					vMC.main(null, uActual);
+					vMC.setVisible(true);
 				}else {
 					timer.start();
 				}
@@ -327,11 +334,14 @@ public class VentanaCurso extends JFrame {
 		contentPane.add(lblTxtTiempo);
 		
 		
+		
+		
 		timer.start();
 		lblRacha.setVisible(false);
+		detectaCambioDificultad.resetFL();
 	}
 
-	private void colocarPregunta(JRadioButton[] respuestasArrayButton, JTextField textoPregunta, LecturaPregunta pregunta) {
+	private void colocarPregunta(JRadioButton[] respuestasArrayButton, JLabel textoPregunta, LecturaPregunta pregunta) {
 		ArrayList<String> respuestas = new ArrayList<String>();
 		for(int i = 1;i<respuestasArrayButton.length+1;i++) {
 			respuestas.add(pregunta.respuestaParaUsuario(i));
@@ -342,7 +352,8 @@ public class VentanaCurso extends JFrame {
 			respuestasArrayButton[i].setText(respuestas.get(i));
 			respuestasArrayButton[i].setSelected(false);
 		}
-		textoPregunta.setText(pregunta.getPregunta());	
+		textoPregunta.setText(centrarTexto(pregunta.getPregunta()));
+		
 	}
 	
 	private void labelAyuda(JRadioButton[] respuestasArrayButton, String respuesta, Usuario uActual) {
@@ -384,6 +395,31 @@ public class VentanaCurso extends JFrame {
 					tiempoLabel.setText(hours+":"+minutes+":"+second);
 				}
 			}
-		}); 
+		});
+		
+		
 	}
+	
+	public String centrarTexto(String texto) {
+		String textoN="<html>";
+
+		int i =0;
+		try {
+			
+			for(;i<texto.length();i++) {
+			
+				if( (texto.charAt(i) =='/')  && (texto.charAt(i+1) == 'n')){
+					textoN += "<br />";
+					i++;
+			}else {
+				textoN += texto.charAt(i);
+			}
+		}
+		}catch(StringIndexOutOfBoundsException e) {
+			if(i<texto.length()) {
+				textoN +=texto.charAt(texto.length()-1);
+			}
+		}
+		return textoN+"</html>";
+}
 }

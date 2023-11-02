@@ -47,6 +47,7 @@ public class VentanaNuevoUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public  VentanaNuevoUsuario() {
+		setTitle("Ventana nuevo usuario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 300, 450, 300);
 		contentPane = new JPanel();
@@ -90,7 +91,7 @@ public class VentanaNuevoUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				VentanaIngreso vI = new VentanaIngreso();
-				vI.main(null);
+				vI.setVisible(true);
 			}
 		});
 		btnBorrar.setBackground(new Color(255, 0, 51));
@@ -134,7 +135,7 @@ public class VentanaNuevoUsuario extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "Usuario registrado");
 					dispose();
 					VentanaIngreso vI = new VentanaIngreso();
-					vI.main(null);
+					vI.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(contentPane, "Error. Usuario ya existente");
 				}

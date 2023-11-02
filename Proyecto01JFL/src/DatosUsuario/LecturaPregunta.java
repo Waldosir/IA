@@ -9,32 +9,25 @@ import procesadoJFL.Dificultad;
 
 public class LecturaPregunta {
 	private Dificultad dif;
-	private ArrayList<String[]> datos = new ArrayList<String[]>();
-	private Usuario uActual;
+	private ArrayList<String[]> datosPregunta = new ArrayList<String[]>();
 	private String nombreCurso;
 	private int numeroPregunta;
 	
 	public LecturaPregunta(Dificultad dif, Usuario uActual, String nombreCurso) {
 	this.numeroPregunta = 0;
-	this.uActual = uActual;
 	this.dif = dif;
 	this.nombreCurso = nombreCurso;
-	usuarioNuevo();
-	calcularPreguntas();
+	calcularPreguntas(false);
 	}
-	
-	public Usuario getUsuario() {
-		return this.uActual;
-	}
-	
+
 	public Dificultad getDificultad() {
 		return this.dif;
 	}
 	
-	public void modificarDificultad(Dificultad dif) {
+	public void modificarDificultad(Dificultad dif, boolean racha) {
 		if(!(this.dif.toString().equals(dif.toString()))) {
 			this.dif = dif;
-			calcularPreguntas();
+			calcularPreguntas(racha);
 		}
 		
 	}
@@ -43,98 +36,88 @@ public class LecturaPregunta {
 	
 	public String getPregunta() {
 		try {
-			return this.datos.get(this.numeroPregunta)[0];
+			return this.datosPregunta.get(this.numeroPregunta)[0];
 		} catch(IndexOutOfBoundsException e) {
 			this.numeroPregunta = 0;
-			Collections.shuffle(this.datos);
-			return this.datos.get(this.numeroPregunta)[0];
+			Collections.shuffle(this.datosPregunta);
+			return this.datosPregunta.get(this.numeroPregunta)[0];
 		}
 		
 	}
 	
 	public String getRespuesta() {
 		try {
-			return this.datos.get(this.numeroPregunta)[5];
+			return this.datosPregunta.get(this.numeroPregunta)[5];
 		}catch(IndexOutOfBoundsException e) {
 			this.numeroPregunta = 0;
-			Collections.shuffle(this.datos);
-			return this.datos.get(this.numeroPregunta)[5];
+			Collections.shuffle(this.datosPregunta);
+			return this.datosPregunta.get(this.numeroPregunta)[5];
 		}
 		
 	}
 	
 	public void siguientePregunta() {
 		this.numeroPregunta++;
-		/*
-		if(this.numeroPregunta>=this.datos.size()) {
-			this.numeroPregunta = 0;
-			Collections.shuffle(datos);
-			
-		}
-		*/
 	}
 	
-	public String respuestaParaUsuario(int opcion) { //LALALALALA
+	public String respuestaParaUsuario(int opcion) { 
 		try {
-			return this.datos.get(numeroPregunta)[opcion+1];
+			return this.datosPregunta.get(numeroPregunta)[opcion+1];
 		}catch(IndexOutOfBoundsException e) {
 			this.numeroPregunta = 0;
-			Collections.shuffle(this.datos);
-			return this.datos.get(numeroPregunta)[opcion+1];
+			Collections.shuffle(this.datosPregunta);
+			return this.datosPregunta.get(numeroPregunta)[opcion+1];
 		}
 		
 	}
 	
 	public String[] tomarDatosPreguntas(int posicion) {
 		try {
-			return this.datos.get(posicion);
+			return this.datosPregunta.get(posicion);
 		}
 		catch(IndexOutOfBoundsException e) {
 			this.numeroPregunta = 0;
-			Collections.shuffle(this.datos);
-			return this.datos.get(posicion);
+			Collections.shuffle(this.datosPregunta);
+			return this.datosPregunta.get(posicion);
 		}
 	}
 	
 	
-	private void calcularPreguntas(){
-		this.datos.clear();
+	private void calcularPreguntas(boolean racha){
+		this.datosPregunta.clear();
 		ArrayList<String[]> pF = datosPreguntaFacil();
 		ArrayList<String[]> pN = datosPreguntaNormal();
 		ArrayList<String[]> pD = datosPreguntaDificil();
 		
 		if(this.dif.toString().equals(Dificultad.facil.toString())) {
 			for(String[] preguntas:pF) {
-				this.datos.add(preguntas);
+				this.datosPregunta.add(preguntas);
 			}
 		}else if(this.dif.toString().equals(Dificultad.normal.toString())){
-
-			for(String[] preguntas:pF) {
-				this.datos.add(preguntas);
-			}
-			//*/
 		
 			for(String[] preguntas:pN) {
-				this.datos.add(preguntas);
+				this.datosPregunta.add(preguntas);
 			}
 			
 		}else if(this.dif.toString().equals(Dificultad.dificil.toString())) {
-
-			for(String[] preguntas:pF) {
-				this.datos.add(preguntas);
+			if(racha) {
+				for(String[] preguntas:pF) {
+					this.datosPregunta.add(preguntas);
+				}
+				
+				for(String[] preguntas:pN) {
+					this.datosPregunta.add(preguntas);
+				}
 			}
 			
-			for(String[] preguntas:pN) {
-				this.datos.add(preguntas);
-			}
 			//*/
 			for(String[] preguntas:pD) {
-				this.datos.add(preguntas);
+				this.datosPregunta.add(preguntas);
 			}
 			
 		}
 
-		Collections.shuffle(datos);
+		Collections.shuffle(datosPregunta);
 	}
 	
 	private ArrayList<String[]> datosPreguntaFacil(){
@@ -155,13 +138,6 @@ public class LecturaPregunta {
 		return datos;
 	}
 	
-	private void usuarioNuevo() {
-		LecturaUsuarios l = new LecturaUsuarios();
-		if(!l.tieneCurso(this.uActual, this.nombreCurso)) {
-			l.anadirCursoUsuario(uActual, nombreCurso);
-		}
-		
-	}
 	
 	/*
 	 * De aqui a arriba no son modificables
@@ -193,8 +169,8 @@ public class LecturaPregunta {
 		return datos;
 	}
 	
-	private int PosicionDatoCurso() {
-		ArrayList<String[]> datos = this.uActual.getDatos();
+	private int PosicionDatoCurso(Usuario uActual) {
+		ArrayList<String[]> datos = uActual.getDatos();
 		int x = 0;
 		for(String[] curso:datos) {
 			if(curso[0].equals(nombreCurso)) {
@@ -206,8 +182,8 @@ public class LecturaPregunta {
 		}
 
 	
-	public boolean CursoTerminado() {
-		ArrayList<String[]> datos = this.uActual.getDatos();
+	public boolean CursoTerminado(Usuario uActual) {
+		ArrayList<String[]> datos = uActual.getDatos();
 		for(String[] curso:datos) {
 			if(curso[0].equals(nombreCurso)) {
 				if(curso[2].equals("1")) {
@@ -218,12 +194,12 @@ public class LecturaPregunta {
 		return false;
 	}
 	
-	private void modificarDatosCursoUsuario(String[] datosUsuario) {
-		ArrayList<String[]> datosCurso = this.uActual.getDatos();
+	private void modificarDatosCursoUsuario(String[] datosUsuario, Usuario uActual) {
+		ArrayList<String[]> datosCurso = uActual.getDatos();
 		ArrayList<String[]> datosFinales = new ArrayList<String[]>();
 		int x = 0;
 		for(String[] sumaDatos: datosCurso) {
-			if(x!=PosicionDatoCurso()) {
+			if(x!=PosicionDatoCurso(uActual)) {
 				datosFinales.add(sumaDatos);
 			}else {
 				datosFinales.add(datosUsuario);
@@ -237,29 +213,29 @@ public class LecturaPregunta {
 		lu.actualizarLista(uActual);
 	}
 	
-	public void terminarCurso() {
-		ArrayList<String[]> datosCursos = this.uActual.getDatos();
-		String[] datosUsuario = datosCursos.get(PosicionDatoCurso());
+	public void terminarCurso(Usuario uActual) {
+		ArrayList<String[]> datosCursos = uActual.getDatos();
+		String[] datosUsuario = datosCursos.get(PosicionDatoCurso(uActual));
 		String datoS = "1";
 		datosUsuario[2] = datoS;
-		modificarDatosCursoUsuario(datosUsuario);
+		modificarDatosCursoUsuario(datosUsuario, uActual);
 	}
 	
-	public void sumarRachaMayorTres() {
-		ArrayList<String[]> datosCursos = this.uActual.getDatos();
-		String[] datosUsuario = datosCursos.get(PosicionDatoCurso());
+	public void sumarRachaMayorTres(Usuario uActual) {
+		ArrayList<String[]> datosCursos = uActual.getDatos();
+		String[] datosUsuario = datosCursos.get(PosicionDatoCurso(uActual));
 		if(datosUsuario[2].equals("0")) {
 			int datoInt = Integer.parseInt(datosUsuario[1])+1;
 			String datoS = datoInt + "";
 			datosUsuario[1] = datoS;
-			modificarDatosCursoUsuario(datosUsuario);
+			modificarDatosCursoUsuario(datosUsuario, uActual);
 		}
 		
 		
 	}
 	
-	public int getNumeroRacha() {
-		String racha = this.uActual.getDatos().get(PosicionDatoCurso())[1];
+	public int getNumeroRacha(Usuario uActual) {
+		String racha = uActual.getDatos().get(PosicionDatoCurso(uActual))[1];
 		return Integer.parseInt(racha);
 	}
 	

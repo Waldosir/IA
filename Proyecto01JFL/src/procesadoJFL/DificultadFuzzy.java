@@ -3,6 +3,7 @@ package procesadoJFL;
 import java.util.Scanner;
 
 import DatosUsuario.LecturaPregunta;
+import DatosUsuario.Usuario;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
@@ -67,7 +68,7 @@ public class DificultadFuzzy {
 		this.time = 0;
 	}
 	
-	public double proceso() {
+	private double proceso() {
 		//double timeL = this.time, helpL = this.help, mistakesL = this.mistakes;
 		double timeL = this.time, helpL = this.help, mistakesL = this.mistakes;
 		if(this.time>60) {
@@ -107,7 +108,7 @@ public class DificultadFuzzy {
        
        //dif = (int)(Math.round(difDouble));
        System.out.println("Calculo DIF: "+difDouble);
-       Variable checkLevel = functionBlock.getVariable(variablesFL.values()[3].toString());
+       //Variable checkLevel = functionBlock.getVariable(variablesFL.values()[3].toString());
        //Tabla de datos
        
       // JFuzzyChart.get().chart(functionBlock);
@@ -115,7 +116,7 @@ public class DificultadFuzzy {
        return difDouble;
 	}
 	
-	public void verificarEstadoNivel(LecturaPregunta pregunta) {
+	public void verificarEstadoNivel(LecturaPregunta pregunta, Usuario uActual) {
 		double nivel = proceso();
 		
 		if(nivel<6) {
@@ -129,11 +130,11 @@ public class DificultadFuzzy {
 		}
 		
 		if(estadoDificultad()) {
-			pregunta.modificarDificultad(cambioDificultad(pregunta.getDificultad()));
+			pregunta.modificarDificultad(cambioDificultad(pregunta.getDificultad()), this.racha);
 		}
 		
 		if(this.racha) {
-			pregunta.sumarRachaMayorTres();
+			pregunta.sumarRachaMayorTres(uActual);
 		}
 	}
 	
@@ -206,6 +207,7 @@ public class DificultadFuzzy {
 	}
 	
 	private void espera() {
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Presione enter para continuar");
 		sc.next();
