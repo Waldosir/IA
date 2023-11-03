@@ -130,7 +130,7 @@ public class VentanaIngreso extends JFrame {
 		if(l.conectar(nombre, contrasena)){
 		try {
 			dispose();
-			Usuario uActual = l.busquedaUsuario(nombre);
+			Usuario uActual = l.buscarUsuario(nombre);
 			VentanaMenuClases vMC= new VentanaMenuClases(uActual);
 			vMC.setVisible(true);
 		

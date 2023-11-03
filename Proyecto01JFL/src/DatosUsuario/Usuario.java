@@ -9,16 +9,14 @@ public class Usuario  {
 	private int numeroLineas;
 	//Nombre del curso - Suma despues de racha de 3 - Condicion de si acabo el curso
 	private ArrayList<String[]> datosCursos = new ArrayList<String[]>();
-	private int opcion;
+	private int opcion = -1;
 	
 	//Usuario para rescatar Usuarios
 	public Usuario(int id, String nombre, String contrasena, int numeroLineas) {
-		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.contrasena = contrasena;
 		this.numeroLineas = numeroLineas;
-		opcion = -1;
 	}
 
 	
@@ -28,7 +26,6 @@ public class Usuario  {
 		this.nombre = nombre;
 		this.contrasena = contrasena;
 		this.numeroLineas = 0;
-		opcion = 0;
 	}
 	
 	public int getOpcion() {
@@ -74,16 +71,16 @@ public class Usuario  {
 	public void anadirDatos(String[] datos) {
 		datosCursos.add(datos);
 	}
+
+	public ArrayList<String[]> getDatos(){
+		return this.datosCursos;
+	}
 	
 	public void setDatos(ArrayList<String[]> datos) {
 		this.datosCursos.clear();
 		for(String[] todo:datos) {
 			anadirDatos(todo);
 		}
-	}
-	
-	public ArrayList<String[]> getDatos(){
-		return this.datosCursos;
 	}
 	
 	

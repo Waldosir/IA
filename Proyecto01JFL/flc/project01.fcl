@@ -24,19 +24,19 @@ END_VAR
 
 FUZZIFY time		// Fuzzify input variable 'service': {'poor', 'good' , 'excellent'}
 	TERM low := (0, 1) (20, 0) ; 
-	TERM average := (15, 0) (20,1) (40,1) (50,0);
-	TERM high := (40, 0) (60, 1);
+	TERM average := (15, 0) (20,1) (30,1) (35,0);
+	TERM high := (25, 0) (40, 1);
 END_FUZZIFY
 
 FUZZIFY help			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
 	TERM low := (0, 1) (1.5,0);
-	Term average:= (0.5,0) (1,1);
+	Term average:= (0.5,0) (1.25,1) (2,0);
 	TERM high := (1,0) (3,1);
 END_FUZZIFY
 
 FUZZIFY mistakes			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
 	TERM low := (0, 1) (1.5,0);
-	Term average:= (0.5,0) (1,1);
+	Term average:= (0.5,0) (1.25,1) (2,0);
 	TERM high := (1,0) (3,1);
 END_FUZZIFY
 
@@ -55,15 +55,16 @@ RULEBLOCK No1
 	
 	
 	RULE 1 : IF time is low AND help is low AND mistakes is low THEN checkLevel is up;
-	RULE 2 : IF time is low AND mistakes is high THEN checkLevel is down;
-	RULE 3 : IF time is low AND help is high THEN checkLevel is stay;
-	RULE 4 : IF time is high AND mistakes is high AND help is high THEN checkLevel is down;
-	RULE 5 : IF time is average THEN checkLevel is stay;
-	RULE 6 : IF time is high AND mistakes is low AND help is low THEN checkLevel is stay;
-	RULE 7 : IF mistakes is high THEN checkLevel is down;
-	RULE 8 : IF mistakes is average AND time is low then checkLevel is stay;
-	RULE 9 : IF help is average AND time is low then checkLevel is stay;
-	RULE 10: IF help is low AND time is average then checkLevel is down;
+	RULE 2 : IF time is high AND help is low AND mistakes is low THEN checkLevel is stay;
+	RULE 3 : IF time is high AND help is average AND mistakes is low THEN checkLevel is stay;
+	RULE 4 : IF time is high AND help is average AND mistakes is average THEN checkLevel is down;
+	RULE 5 : IF help is high THEN checkLevel is down;
+	RULE 6 : IF mistakes is high THEN checkLevel is down;
+	RULE 7 : IF mistakes is average THEN checkLevel is stay;
+	RULE 8 : IF time is average AND help is low AND mistakes is low THEN checkLevel is up;
+	RULE 9 : IF time is average OR help is average THEN checkLevel is stay;
+	RULE 10 : IF help is average AND mistakes is average THEN checkLevel is down;
+	
 
 
 	

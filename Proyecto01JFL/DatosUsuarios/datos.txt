@@ -1,4 +1,5 @@
-1|Aldair|123456|0
+1|Aldair|123456|1
+Graficas|0|0
 2|1|1|2
 Graficas|6|1
 Algebra|10|1
@@ -10,4 +11,6 @@ Algebra|1|0
 7|Vladimir|123456|2
 Algebra|0|0
 Graficas|2|0
-8|AAAAAAAAAAA|123456|0
+8|AAAAAAAAAAA|123456|2
+Graficas|0|0
+Algebra|0|0

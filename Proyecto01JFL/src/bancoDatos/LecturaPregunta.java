@@ -1,10 +1,9 @@
-package DatosUsuario;
+package bancoDatos;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import bancoDatos.LecturaPreguntastxt;
-import bancoDatos.LecturaUsuarios;
+import DatosUsuario.Usuario;
 import procesadoJFL.Dificultad;
 
 public class LecturaPregunta {
@@ -13,7 +12,7 @@ public class LecturaPregunta {
 	private String nombreCurso;
 	private int numeroPregunta;
 	
-	public LecturaPregunta(Dificultad dif, Usuario uActual, String nombreCurso) {
+	public LecturaPregunta(Dificultad dif, String nombreCurso) {
 	this.numeroPregunta = 0;
 	this.dif = dif;
 	this.nombreCurso = nombreCurso;
@@ -31,9 +30,7 @@ public class LecturaPregunta {
 		}
 		
 	}
-	
 
-	
 	public String getPregunta() {
 		try {
 			return this.datosPregunta.get(this.numeroPregunta)[0];

@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import DatosUsuario.LecturaPregunta;
 import DatosUsuario.Usuario;
+import bancoDatos.LecturaPregunta;
 import bancoDatos.LecturaUsuarios;
 import procesadoJFL.Dificultad;
 
@@ -92,8 +92,8 @@ public class VentanaMenuClases extends JFrame {
 		JButton btnAlgebra = new JButton("Algebra");
 		btnAlgebra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nombreCurso = btnGraficas.getText();
-				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil, uActual, nombreCurso);
+				String nombreCurso = btnAlgebra.getText();
+				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil,nombreCurso);
 				IngresarCurso(nombreCurso, pregunta, uActual);
 			}
 		});
@@ -110,7 +110,7 @@ public class VentanaMenuClases extends JFrame {
 		btnGraficas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombreCurso = btnGraficas.getText();
-				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil, uActual, nombreCurso);
+				LecturaPregunta pregunta = new LecturaPregunta(Dificultad.facil,nombreCurso);
 				IngresarCurso(nombreCurso, pregunta, uActual);
 			}
 		});
@@ -119,7 +119,7 @@ public class VentanaMenuClases extends JFrame {
 	private void IngresarCurso(String nombreCurso, LecturaPregunta pregunta, Usuario uActual) {
 		LecturaUsuarios l = new LecturaUsuarios();
 		if(!(l.tieneCurso(uActual, nombreCurso))) {
-			l.anadirCursoUsuario(uActual, nombreCurso);
+			JOptionPane.showMessageDialog(contentPane, "Bienvenido al curso "+nombreCurso);
 		}
 		
 		if(pregunta.CursoTerminado(uActual)) {

@@ -20,8 +20,8 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import DatosUsuario.LecturaPregunta;
 import DatosUsuario.Usuario;
+import bancoDatos.LecturaPregunta;
 import procesadoJFL.DificultadFuzzy;
 
 public class VentanaCurso extends JFrame {

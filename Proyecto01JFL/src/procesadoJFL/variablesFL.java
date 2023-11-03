@@ -1,14 +1,16 @@
 package procesadoJFL;
 
 public enum variablesFL {
-	time("time"),help("help"),mistakes("mistakes"), checkLevel("checkLevel");
-	String valor;
-	private variablesFL(String valor) {
-		this.valor = valor;
+	time(40),help(3),mistakes(3), checkLevel(10);
+	
+	int valorMaximo;
+	
+	
+	private variablesFL(int valor) {
+		this.valorMaximo = valor;
 	}
 	
-	public String toString() {
-		return this.valor;
+	public int getValorMaximo() {
+		return this.valorMaximo;
 	}
-
 }

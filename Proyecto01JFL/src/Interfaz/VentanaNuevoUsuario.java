@@ -128,7 +128,7 @@ public class VentanaNuevoUsuario extends JFrame {
 	private void validarUsuarioNuevo(JTextField textUsuario, JTextField textContrasena,JTextField textConfirmarContrasena ) {
 		LecturaUsuarios l = new LecturaUsuarios();
 		if(textContrasena.getText().equals(textConfirmarContrasena.getText())) {
-			if(l.validarCantidad(textUsuario.getText(), textContrasena.getText())) {
+			if(l.validarTamano(textUsuario.getText(), textContrasena.getText())) {
 				if(l.nombreDistinto(textUsuario.getText())) {
 					Usuario u = new Usuario(textUsuario.getText(), textContrasena.getText());
 					l.actualizarLista(u);

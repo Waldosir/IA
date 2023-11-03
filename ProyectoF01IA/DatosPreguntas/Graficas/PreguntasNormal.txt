@@ -1,0 +1,6 @@
+¿En que valor de X toca el Dominio de la grafica?: /ny = (x^2)-4|x = ±2|x = ±3|x = ±4|x = ±1|x = ±2|
+¿En que valor de X toca el Dominio de la grafica?: /ny = (x^2)-25|x = ±5|x = ±4|x = ±6|x = ±25|x = ±5|
+¿En que valor de X toca el Dominio de la grafica?: /ny = (x^2)-16|x = ±4|x = ±8|x = ±2|x = ±16|x = ±4|
+¿En que valor de X toca el Rango de la grafica?: /ny = (x^2)-4|x = -4|x = 4|x = 2|x = -2|x = -4|
+¿En que valor de X toca el Rango de la grafica?: /ny = (x^2)-25|x = -25|x = 25|x = 5|x = -5|x = -25|
+¿En que valor de X toca el Rango de la grafica?: /ny = (x^2)-16|x = -16|x = 16|x = -4|x = 4|x = -16|

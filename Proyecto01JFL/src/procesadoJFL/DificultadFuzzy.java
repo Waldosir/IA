@@ -2,16 +2,16 @@ package procesadoJFL;
 
 import java.util.Scanner;
 
-import DatosUsuario.LecturaPregunta;
 import DatosUsuario.Usuario;
+import bancoDatos.LecturaPregunta;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
 import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 public class DificultadFuzzy {
-	//private final String fileName = "C:/Users/Waldosir/Desktop/PrograMCC/IA/flc/project01.fcl";
-	private final String fileName = "D:/Documentos/RepositoriosGITHub/IA/Proyecto01JFL/flc/project01.fcl";
+	private final String fileName = System.getProperty("user.dir")+"/flc/project01.fcl";
+	//private final String fileName = "D:/Documentos/RepositoriosGITHub/IA/Proyecto01JFL/flc/project01.fcl";
 	private int time;
 	private int help;
 	private int mistakes;
@@ -118,11 +118,13 @@ public class DificultadFuzzy {
 	
 	public void verificarEstadoNivel(LecturaPregunta pregunta, Usuario uActual) {
 		double nivel = proceso();
-		
+		if(nivel<4) {
+			this.down--;
+		}
 		if(nivel<6) {
 			this.down++;
 			racha = false;
-		}else if(nivel<8) {
+		}else if(nivel<7.8) {
 			this.stay++;
 			racha = false;
 		}else {
@@ -180,29 +182,38 @@ public class DificultadFuzzy {
 	}
 	
 	public void checarGraficas() {
-				System.out.println("Sube:");
-				pruebas(0,0,0); //Dificultad UP -> 9
+			int tiempoMedio = 21;
+			int ayudaMedia =1;
+			int errorMedio = 1;
+				System.out.println("Primera prueba:");
+				pruebas(tiempoMedio,2,1);
 				espera();
-				System.out.println("Baja:");
-				pruebas(100,3,3); //Dificultad down -> 2
+				System.out.println("R1Sube:");
+				pruebas(0,0,0); 
 				espera();
-				System.out.println("Queda:");
-				pruebas(100,0,0);//Dificultad stay -> 6.67
+				System.out.println("R2Queda:");
+				pruebas(100,0,0); 
 				espera();
-				System.out.println("Baja:");
-				pruebas(0,0,3);//Dificultad down -> 4
+				System.out.println("R3Queda ->Ver:");
+				pruebas(100,ayudaMedia,0);
 				espera();
-				System.out.println("Baja:");
-				pruebas(30,0,3);//Dificultad down -> 4
+				System.out.println("R4Baja:");
+				pruebas(100,ayudaMedia,errorMedio);
 				espera();
-				System.out.println("Queda:");
-				pruebas(30,3,0);//Dificultad stay - 6
+				System.out.println("R5Baja:");
+				pruebas(-1,3,-1);
 				espera();
-				System.out.println("Queda:");
-				pruebas(0,3,0);//Dificultad stay -> 6
+				System.out.println("R6Baja:");
+				pruebas(-1,-1,3);
 				espera();
-				System.out.println("Queda:");
-				pruebas(30,3,1);//Dificultad stay -> 6.666
+				System.out.println("R7Queda:");
+				pruebas(-1,-1,errorMedio);
+				espera();
+				System.out.println("R8Sube:");
+				pruebas(tiempoMedio,0,-1);
+				espera();
+				System.out.println("R9Queda:");
+				pruebas(tiempoMedio,ayudaMedia,-1);
 				espera();
 	}
 	
@@ -217,14 +228,14 @@ public class DificultadFuzzy {
 	private void pruebas(double timeL, double helpL, double mistakesL) {
 
 		
-				if(timeL>60) {
-					timeL = 60;
+				if(timeL>variablesFL.time.getValorMaximo()) {
+					timeL = variablesFL.time.getValorMaximo();
 				}
-				if(helpL>3) {
-					helpL = 3;
+				if(helpL>variablesFL.help.getValorMaximo()) {
+					helpL =variablesFL.help.getValorMaximo();
 				}
-				if(mistakesL>3) {
-					mistakesL = 3;
+				if(mistakesL>variablesFL.mistakes.getValorMaximo()) {
+					mistakesL = variablesFL.mistakes.getValorMaximo();
 				}
 				
 				 // Load from 'FCL' file

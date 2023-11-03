@@ -14,7 +14,7 @@ import java.util.Comparator;
 import DatosUsuario.Usuario;
 
 public class LecturaUsuarios {
-	String Ruta = "DatosUsuarios/datos.txt";
+	private String Ruta = "DatosUsuarios/datos.txt";
 	private ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 	
 	public LecturaUsuarios() { //Toma todos los usuarios
@@ -22,8 +22,19 @@ public class LecturaUsuarios {
 		for(Usuario lista:l) {
 			this.listaUsuarios.add(lista);
 		}
+		l= null;
 	}
 	
+	public Usuario buscarUsuario(String nombre) {
+		Usuario u = null;
+		for(Usuario uLista:this.listaUsuarios){
+			if(uLista.getNombre().equals(nombre)) {
+				u = uLista;
+				break;
+			}
+		}
+		return u;
+	}
 	
 	public boolean nombreDistinto(String nombre) { //Impide que haya nombre repetido
 		for(Usuario lista:listaUsuarios) {
@@ -35,7 +46,7 @@ public class LecturaUsuarios {
 	}
 	
 	//Valida usuarios y contraseñas que no esten largos o cortos
-	public boolean validarCantidad(String nombre, String contrasena) {
+	public boolean validarTamano(String nombre, String contrasena) {
 		if(nombre.length()<12 && nombre.length()>=4) {
 			if(contrasena.length()<10 && contrasena.length()>4) {
 				return true;
@@ -65,19 +76,19 @@ public class LecturaUsuarios {
 					return true;
 				}
 			}
-		
+		anadirCursoUsuario(u,  nombreCurso);
 		return false;
 	}
 	
 	//Añade el curso a la linea de texto.
-	public void anadirCursoUsuario(Usuario u, String nombreCurso) {
+	private void anadirCursoUsuario(Usuario u, String nombreCurso) {
 		String datos[] = {nombreCurso,"0","0"};
 		u.anadirDatos(datos);
 		u.setNumeroLineas(u.getNumeroLineas()+1);
-		actualizarLista(u);
+		this.actualizarLista(u);
 	}
 	
-	private void agregarActualizar(Usuario usuario) {
+	private void metodoAgregar(Usuario usuario) {
 			Usuario u = usuario;//Crea un usuario
 			/*
 			 * FileOutPutStream permite la salida de datos. Como FileWriter, solo que permite 
@@ -87,7 +98,7 @@ public class LecturaUsuarios {
 			 */
 			try(FileOutputStream fos = new FileOutputStream(Ruta,true); 
 					PrintStream salida = new PrintStream(fos)){
-			//Imprime Nombre|Puntaje
+			//Imprime ID, nombre, contraseña y numero de cursos con su información respectiva
 				salida.println(u.getId()+"|"+u.getNombre()+"|"+u.getContrasena()+"|"+u.getNumeroLineas());
 				for(int i=0;i<u.getNumeroLineas();i++) {
 					String[] datosCurso = u.getDatos().get(i);
@@ -99,38 +110,8 @@ public class LecturaUsuarios {
 			}
 			
 	}
-	
 
-	public Usuario busquedaUsuario(String nombreUsuario) {
-		Usuario u = null;
-		try(BufferedReader bf = new BufferedReader(new FileReader(Ruta))){//Encuentra el archivo
-			String s;
-			while((s = bf.readLine())!=null) {//Lee una linea entera y hasta que la línea ya no tenga nada
-				String[] datos = s.split("[|]");//Array de todos los datos seccionados
-				if(datos[1].equals(nombreUsuario)) {//Si encuentra el nombre se crea el objeto con sus datos
-					u = new Usuario(Integer.parseInt(datos[0]),datos[1], datos[2],Integer.parseInt(datos[3]));
-					int lineas = u.getNumeroLineas();
-					for(int i=0;i<lineas;i++) {
-						s = bf.readLine();
-						datos = s.split("[|]");
-						u.anadirDatos(datos);
-					}
-					
-					break;
-				}
-			}
-		}catch(FileNotFoundException ex) { //Excepction no encuentra el archivo
-			crearArchivo(); //Crea el archivo
-		}
-		catch(IOException ex) { //Otra clase de error
-			System.out.println("Error");
-			ex.printStackTrace();
-		}
-		
-		return u;
-	}
-
-	public void crearArchivo() {
+	private void crearArchivo() {
 		try {
 		      File myObj = new File(Ruta); //Archivo en objeto
 		      if (myObj.createNewFile()) { //Si se crea el archivo
@@ -170,7 +151,7 @@ public class LecturaUsuarios {
 		//Se regresa el ArrayList en Array
 		return existentes.toArray(new Usuario[0]);}
 	
-	public ArrayList<Usuario> recuperarArrayListUsuarios() {
+	private ArrayList<Usuario> recuperarArrayListUsuarios() { //Conversion de Arreglo a ArrayList
 		ArrayList<Usuario> listaU = new ArrayList<Usuario>();
 		Usuario[] lista = recuperarUsuarios();
 		for(int i=0;i<lista.length;i++) {
@@ -180,7 +161,7 @@ public class LecturaUsuarios {
 		return listaU;
 	}
 	
-	public void borraTodo(){
+	private void borraTodo(){
 		try(PrintStream out = new PrintStream(Ruta);){//Crea un nuevo archivo con esos datos
 			FileOutputStream writer = new FileOutputStream(Ruta);
 			writer.write(("").getBytes()); //Escribe un archivo sin caracteres
@@ -207,7 +188,7 @@ public class LecturaUsuarios {
 			ordenarMiembros();
 			borraTodo(); //Archivo limpio
 			for(Usuario listaT:this.listaUsuarios) {
-				agregarActualizar(listaT);
+				metodoAgregar(listaT);
 			}
 		}
 		
@@ -236,7 +217,7 @@ public class LecturaUsuarios {
 		
 		borraTodo(); //Archivo limpio
 		for(Usuario listaT:this.listaUsuarios) {
-			agregarActualizar(listaT);
+			metodoAgregar(listaT);
 		}
 	}
 	
@@ -266,6 +247,37 @@ public class LecturaUsuarios {
 	}
 	
 	
+	/*
+	public Usuario busquedaUsuario(String nombreUsuario) { 
+		Usuario u = null;
+		try(BufferedReader bf = new BufferedReader(new FileReader(Ruta))){//Encuentra el archivo
+			String s;
+			while((s = bf.readLine())!=null) {//Lee una linea entera y hasta que la línea ya no tenga nada
+				String[] datos = s.split("[|]");//Array de todos los datos seccionados
+				if(datos[1].equals(nombreUsuario)) {//Si encuentra el nombre se crea el objeto con sus datos
+					u = new Usuario(Integer.parseInt(datos[0]),datos[1], datos[2],Integer.parseInt(datos[3]));
+					int lineas = u.getNumeroLineas();
+					for(int i=0;i<lineas;i++) {
+						s = bf.readLine();
+						datos = s.split("[|]");
+						u.anadirDatos(datos);
+					}
+					
+					break;
+				}
+			}
+		}catch(FileNotFoundException ex) { //Excepction no encuentra el archivo
+			crearArchivo(); //Crea el archivo
+		}
+		catch(IOException ex) { //Otra clase de error
+			System.out.println("Error");
+			ex.printStackTrace();
+		}
+		
+		return u;
+	}
+	
+	//*/
 	
 	
 	

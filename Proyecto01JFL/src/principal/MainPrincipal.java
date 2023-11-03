@@ -4,16 +4,17 @@ import Interfaz.VentanaIngreso;
 import procesadoJFL.DificultadFuzzy;
 
 
-public class mainPrincipal {
+public class MainPrincipal {
 
 	public static void main(String[] args) {
-		//pruebas()
-		
-		ventana(args);
+		ventana();
+		pruebas();
+		String url = System.getProperty("user.dir");
+		System.out.println(url);
 	}
 	
-
-	private static void ventana(String[] args) {
+	
+	private static void ventana() {
 		VentanaIngreso v = new VentanaIngreso();
 		v.setVisible(true);
 	}
@@ -23,5 +24,5 @@ public class mainPrincipal {
 		DificultadFuzzy d = new DificultadFuzzy();
 		d.checarGraficas();
 	}
-
+	//*/
 }
