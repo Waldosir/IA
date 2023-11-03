@@ -119,19 +119,19 @@ public class LecturaPregunta {
 	
 	private ArrayList<String[]> datosPreguntaFacil(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		datos = datosPFaciltxtGrafica(); //De donde saca la información
+		datos = datosPFaciltxt(); //De donde saca la información
 		return datos;
 	}
 	
 	private ArrayList<String[]> datosPreguntaNormal(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		datos = datosPNormaltxtGrafica(); //De donde saca la información
+		datos = datosPNormaltxt(); //De donde saca la información
 		return datos;
 	}
 	
 	private ArrayList<String[]> datosPreguntaDificil(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		datos = datosPDificiltxtGrafica(); //De donde saca la información
+		datos = datosPDificiltxt(); //De donde saca la información
 		return datos;
 	}
 	
@@ -145,28 +145,28 @@ public class LecturaPregunta {
 	 */
 	
 	
-	private ArrayList<String[]> datosPFaciltxtGrafica(){
+	private ArrayList<String[]> datosPFaciltxt(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		LecturaPreguntastxt preguntaDatos = new LecturaPreguntastxt(this.nombreCurso);
 		datos = preguntaDatos.preguntasFacil();
 		return datos;
 	}
 	
-	private ArrayList<String[]> datosPNormaltxtGrafica(){
+	private ArrayList<String[]> datosPNormaltxt(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		LecturaPreguntastxt preguntaDatos = new LecturaPreguntastxt(this.nombreCurso);
 		datos = preguntaDatos.preguntasNormal();
 		return datos;
 	}
 	
-	private ArrayList<String[]> datosPDificiltxtGrafica(){
+	private ArrayList<String[]> datosPDificiltxt(){
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		LecturaPreguntastxt preguntaDatos = new LecturaPreguntastxt(this.nombreCurso);
 		datos = preguntaDatos.preguntasDificil();
 		return datos;
 	}
 	
-	private int PosicionDatoCurso(Usuario uActual) {
+	private int posicionDatoCurso(Usuario uActual) {
 		ArrayList<String[]> datos = uActual.getDatos();
 		int x = 0;
 		for(String[] curso:datos) {
@@ -179,7 +179,7 @@ public class LecturaPregunta {
 		}
 
 	
-	public boolean CursoTerminado(Usuario uActual) {
+	public boolean cursoTerminado(Usuario uActual) {
 		ArrayList<String[]> datos = uActual.getDatos();
 		for(String[] curso:datos) {
 			if(curso[0].equals(nombreCurso)) {
@@ -196,7 +196,7 @@ public class LecturaPregunta {
 		ArrayList<String[]> datosFinales = new ArrayList<String[]>();
 		int x = 0;
 		for(String[] sumaDatos: datosCurso) {
-			if(x!=PosicionDatoCurso(uActual)) {
+			if(x!=posicionDatoCurso(uActual)) {
 				datosFinales.add(sumaDatos);
 			}else {
 				datosFinales.add(datosUsuario);
@@ -212,7 +212,7 @@ public class LecturaPregunta {
 	
 	public void terminarCurso(Usuario uActual) {
 		ArrayList<String[]> datosCursos = uActual.getDatos();
-		String[] datosUsuario = datosCursos.get(PosicionDatoCurso(uActual));
+		String[] datosUsuario = datosCursos.get(posicionDatoCurso(uActual));
 		String datoS = "1";
 		datosUsuario[2] = datoS;
 		modificarDatosCursoUsuario(datosUsuario, uActual);
@@ -220,7 +220,7 @@ public class LecturaPregunta {
 	
 	public void sumarRachaMayorTres(Usuario uActual) {
 		ArrayList<String[]> datosCursos = uActual.getDatos();
-		String[] datosUsuario = datosCursos.get(PosicionDatoCurso(uActual));
+		String[] datosUsuario = datosCursos.get(posicionDatoCurso(uActual));
 		if(datosUsuario[2].equals("0")) {
 			int datoInt = Integer.parseInt(datosUsuario[1])+1;
 			String datoS = datoInt + "";
@@ -232,7 +232,7 @@ public class LecturaPregunta {
 	}
 	
 	public int getNumeroRacha(Usuario uActual) {
-		String racha = uActual.getDatos().get(PosicionDatoCurso(uActual))[1];
+		String racha = uActual.getDatos().get(posicionDatoCurso(uActual))[1];
 		return Integer.parseInt(racha);
 	}
 	

@@ -122,7 +122,7 @@ public class VentanaMenuClases extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Bienvenido al curso "+nombreCurso);
 		}
 		
-		if(pregunta.CursoTerminado(uActual)) {
+		if(pregunta.cursoTerminado(uActual)) {
 			JOptionPane.showMessageDialog(contentPane, "El curso ya ha sido completado. Se activara el modo infinito de preguntas");
 			dispose();
 			VentanaCurso vC = new VentanaCurso(nombreCurso,pregunta,uActual, true);

@@ -313,7 +313,7 @@ public class VentanaCurso extends JFrame {
 				colocarPregunta(respuestasArrayButton, textoPregunta, preguntas);
 				lblRespuesta.setText("Respuesta:");
 				detectaCambioDificultad.resetFL();
-				if(preguntas.getNumeroRacha(uActual)>=NUMEROTERMINARCURSO && !preguntas.CursoTerminado(uActual)) {
+				if(preguntas.getNumeroRacha(uActual)>=NUMEROTERMINARCURSO && !preguntas.cursoTerminado(uActual)) {
 					preguntas.terminarCurso(uActual);
 					JOptionPane.showMessageDialog(contentPane, "Felicidades. Has terminado el curso "+nombreCurso);
 					dispose();

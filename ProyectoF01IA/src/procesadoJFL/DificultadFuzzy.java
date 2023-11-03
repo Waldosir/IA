@@ -11,7 +11,6 @@ import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 public class DificultadFuzzy {
 	private final String fileName = System.getProperty("user.dir")+"/flc/project01.fcl";
-	//private final String fileName = "D:/Documentos/RepositoriosGITHub/IA/Proyecto01JFL/flc/project01.fcl";
 	private int time;
 	private int help;
 	private int mistakes;
@@ -71,14 +70,15 @@ public class DificultadFuzzy {
 	private double proceso() {
 		//double timeL = this.time, helpL = this.help, mistakesL = this.mistakes;
 		double timeL = this.time, helpL = this.help, mistakesL = this.mistakes;
-		if(this.time>60) {
-			timeL = 60;
+		
+		if(timeL>variablesFL.time.getValorMaximo()) {
+			timeL = variablesFL.time.getValorMaximo();
 		}
-		if(this.help>3) {
-			helpL = 3;
+		if(helpL>variablesFL.help.getValorMaximo()) {
+			helpL =variablesFL.help.getValorMaximo();
 		}
-		if(this.mistakes>3) {
-			mistakesL = 3;
+		if(mistakesL>variablesFL.mistakes.getValorMaximo()) {
+			mistakesL = variablesFL.mistakes.getValorMaximo();
 		}
 		
 		 // Load from 'FCL' file
@@ -106,8 +106,8 @@ public class DificultadFuzzy {
        
        double difDouble = functionBlock.getVariable(variablesFL.values()[3].toString()).defuzzify();
        
+       //System.out.println(difDouble);
        //dif = (int)(Math.round(difDouble));
-       System.out.println("Calculo DIF: "+difDouble);
        //Variable checkLevel = functionBlock.getVariable(variablesFL.values()[3].toString());
        //Tabla de datos
        
@@ -119,7 +119,7 @@ public class DificultadFuzzy {
 	public void verificarEstadoNivel(LecturaPregunta pregunta, Usuario uActual) {
 		double nivel = proceso();
 		if(nivel<4) {
-			this.down--;
+			this.down++;
 		}
 		if(nivel<6) {
 			this.down++;
@@ -130,7 +130,6 @@ public class DificultadFuzzy {
 		}else {
 			this.up++;
 		}
-		
 		if(estadoDificultad()) {
 			pregunta.modificarDificultad(cambioDificultad(pregunta.getDificultad()), this.racha);
 		}
@@ -174,13 +173,14 @@ public class DificultadFuzzy {
 		}
 		
 		this.up = 0;
-		this.down = 1;
+		this.down = 0;
 		this.stay = 0;
 		
 		return dificultadCambiar;
 		
 	}
 	
+	/*//Activar solo para pruebas
 	public void checarGraficas() {
 			int tiempoMedio = 21;
 			int ayudaMedia =1;
@@ -270,5 +270,5 @@ public class DificultadFuzzy {
 		       JFuzzyChart.get().chart(checkLevel, checkLevel.getDefuzzifier(),true);
 	}
 	
-	
+	//*/
 }
