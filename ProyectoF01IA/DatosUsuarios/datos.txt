@@ -1,9 +1,4 @@
-1|Aldair|12345|2
-Graficas|0|0
-Algebra|0|0
-2|1|1|2
-Algebra|0|0
-Graficas|0|0
-3|Waldosir|123456|2
-Algebra|0|0
-Graficas|0|0
+1|Prueba01|PruCon|0
+2|Vladimir|123456|2
+Algebra|4|0
+Graficas|1|0

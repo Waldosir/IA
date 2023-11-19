@@ -161,7 +161,7 @@ public class DificultadFuzzy {
 				dificultadCambiar = Dificultad.dificil;
 				this.racha = true;
 			}
-		}else if(down<=3) {
+		}else if(down>=3) {
 			if(Dificultad.dificil.toString().equals(d.toString())) {
 				dificultadCambiar = Dificultad.normal;
 				this.racha = false;
@@ -171,7 +171,6 @@ public class DificultadFuzzy {
 				dificultadCambiar = Dificultad.facil;
 			}
 		}
-		
 		this.up = 0;
 		this.down = 0;
 		this.stay = 0;
